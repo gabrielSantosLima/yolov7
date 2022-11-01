@@ -1,0 +1,9 @@
+
+train: ./data/train  # 118287 images
+val: ./data/validation  # 5000 images
+
+# number of classes
+nc: 12
+
+# class names
+names: [ 'bispo preto','bispo branco','cavalo branco','cavalo preto','rainha preta','rainha branca','peão branco','peão preto','rei preto','rei branco','torre preta','torre branca']
