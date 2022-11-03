@@ -17,7 +17,6 @@
 !cfg/yolov3*.cfg
 
 storage.googleapis.com
-runs/*
 !data/hyps
 !data/scripts
 !data/images/zidane.jpg
