@@ -7,7 +7,8 @@
 - [Passo 3: Detectando o tabuleiro](#passo-3-detectando-o-tabuleiro)
 - [Passo 4: Detectando as peças no tabuleiro](#passo-4-detectando-as-peças-no-tabuleiro)
 - [Passo 5: Detectando posições de uma determinada peça](#passo-5-detectando-posições-de-uma-determinada-peça)
-- [Passo 6: Desenhando as posições na imagem](#passo-6-desenhando-as-posições-na-tela)
+- [Passo 6: Desenhando as posições na imagem](#passo-6-desenhando-as-posições-na-imagem)
+- [Código final](#código-final)
 - [Autores](#autores)
 
 ## Passo 1: Lendo a peça desejada
