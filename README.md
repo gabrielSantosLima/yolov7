@@ -99,7 +99,7 @@ piece = find_piece_in_board(board, piece_notation)
 
 # Detectando posições de uma peça, caso ela exista no tabuleiro.
 if isinstance(piece, Piece):
-    positions = list[ChessObject] = detect_positions(board, piece)
+    positions: list[ChessObject] = detect_positions(board, piece)
 ```
 
 ## Passo 6: Desenhando as posições na imagem
@@ -146,7 +146,7 @@ class Chess:
 
         # Detectando posições de uma peça, caso ela exista no tabuleiro.
         if isinstance(piece, Piece):
-            positions = list[ChessObject] = detect_positions(board, piece)
+            positions: list[ChessObject] = detect_positions(board, piece)
 
             # Desenhando as posições na imagem
             draw_positions(image, positions)
