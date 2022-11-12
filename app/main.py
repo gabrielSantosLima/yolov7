@@ -6,7 +6,7 @@ def labelDraw(image,detect, color_rec = (255, 255, 0), rec_width = 2, font = cv2
 	for det in detect:
 		x,y,x2,y2 = det[:4]
 		cv2.rectangle(image, (int(x) , int(y)), (int(x2) , int(y2)), color_rec, rec_width)
-		names = model.class_names
+		names = model.class_names # nome das peças
 		label = "Class {0}, conf {conf:.2f}".format(names[int(det[5])],conf = det[4])
 		cv2.putText(image,label,(int(x),int(y)),font,width_font,color_font)
 
@@ -17,7 +17,7 @@ def onImage(imagem_path):
 	image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 	img_size = image.shape
 	
-	detect = model.processFrame(image)
+	detect = model.processFrame(image) # pontos
 	labelDraw(image_display,detect)
 	cv2.imshow("Result", image_display)
 	cv2.waitKey(0)
