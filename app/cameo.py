@@ -20,6 +20,7 @@ class Cameo(object):
 
             self._captureManager.exitFrame()
             self._windowManager.processEvents()
+           
 
     def onKeypress(self, keycode):
         """Handle a keypress.
