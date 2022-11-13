@@ -1,6 +1,5 @@
 import cv2
-
-from managers import CaptureManager, WindowManager
+from app.managers import CaptureManager, WindowManager
 
 
 class Cameo(object):
@@ -10,14 +9,14 @@ class Cameo(object):
         self._captureManager = CaptureManager(
             cv2.VideoCapture(0), self._windowManager, True)
 
-    def run(self):
+    def run(self, main):
         self._windowManager.createWindow()
         while self._windowManager.isWindowCreated:
             self._captureManager.enterFrame()
             frame = self._captureManager.frame
 
             if frame is not None:
-                pass
+                main.detect_pieces(frame)
 
             self._captureManager.exitFrame()
             self._windowManager.processEvents()
@@ -43,3 +42,7 @@ class Cameo(object):
         elif keycode == 27: # escape
             self._captureManager.close_can()
             self._windowManager.destroyWindow()
+
+if __name__ == '__main__':
+    c = Cameo()
+    c.run()
