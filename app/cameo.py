@@ -43,7 +43,3 @@ class Cameo(object):
         elif keycode == 27: # escape
             self._captureManager.close_can()
             self._windowManager.destroyWindow()
-
-if __name__ == '__main__':
-    c = Cameo()
-    c.run()

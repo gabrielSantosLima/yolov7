@@ -1,4 +1,4 @@
-from app.chesspiece import (CHESS_BOARD, COORDINATE, Piece,ChessPieceEnum, ColorEnum)
+from app.chesspiece import (CHESS_BOARD, COORDINATE, ChessObject, Piece,ChessPieceEnum, ColorEnum)
 from app.positions.positionbuilder import PositionBuilder
 from app.utils import get_chess_board_size
 
@@ -72,7 +72,7 @@ def get_classname_of(name: str) -> ChessPieceEnum:
             return piece
     return ChessPieceEnum.PAWN
 
-def detect_positions(chess_board: CHESS_BOARD, chess_piece: Piece) -> list[COORDINATE]:
+def detect_positions(chess_board: CHESS_BOARD, chess_piece: Piece) -> list[ChessObject]:
     positions = get_positions_of(chess_board, chess_piece)
     
     if get_classname_of(chess_piece.name) == ChessPieceEnum.KING:
@@ -84,4 +84,8 @@ def detect_positions(chess_board: CHESS_BOARD, chess_piece: Piece) -> list[COORD
             filter(lambda position: position not in all_positions_of_enemy, positions)
         )
     
-    return positions
+    positions_2_chess_object: list[ChessObject] = list(
+        map(lambda x,y: chess_board[y][x], positions)
+    )
+
+    return positions_2_chess_object
