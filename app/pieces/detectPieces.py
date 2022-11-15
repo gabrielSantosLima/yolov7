@@ -21,9 +21,9 @@ class DetectPieces:
 			#cv2.putText(image,label,(int(x),int(y)),font,width_font,color_font)
 
 			piece_on_screeen = Piece(x, y, x2, y2, names[int(det[5])])
-			#print(f'{piece_on_screeen.name} |  X: {piece_on_screeen.top_left} X2: {piece_on_screeen.bottom_left}')
-			#print(f'Y: {piece_on_screeen.top_right} Y2: {piece_on_screeen.bottom_right}')
-			#print(f'height: {piece_on_screeen.height}, width: {piece_on_screeen.width}')
+			print(f'| {piece_on_screeen.name} |\n   top left: {piece_on_screeen.top_left}   top right: {piece_on_screeen.top_right}')
+			print(f'bottom left: {piece_on_screeen.bottom_left} bottom right: {piece_on_screeen.bottom_right}')
+			print(f'height: {piece_on_screeen.height}, width: {piece_on_screeen.width}')
 			pieces.append(piece_on_screeen)
 		
 		return pieces
