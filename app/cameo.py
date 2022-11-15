@@ -9,14 +9,14 @@ class Cameo(object):
         self._captureManager = CaptureManager(
             cv2.VideoCapture(0), self._windowManager, True)
 
-    def run(self, main):
+    def run(self, chess):
         self._windowManager.createWindow()
         while self._windowManager.isWindowCreated:
             self._captureManager.enterFrame()
             frame = self._captureManager.frame
 
             if frame is not None:
-                main.detect_pieces(frame)
+                chess.run(frame)
 
             self._captureManager.exitFrame()
             self._windowManager.processEvents()
