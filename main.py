@@ -3,6 +3,7 @@ from app.chesspiece import ChessObject, Piece, Square, CHESS_BOARD
 from app.pieces.pieces import detect_pieces
 from app.positions.positions import detect_positions 
 from app.moves.moves import draw_positions
+from app.board.board import detect_board
 
 class Chess:
     def __init__(self, model):
