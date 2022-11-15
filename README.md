@@ -2,14 +2,16 @@
 
 ## Sumário
 
-- [Passo 1: Lendo a peça desejada](#passo-1-lendo-a-peça-desejada)
-- [Passo 2: Detectando as peças em uma imagem](#passo-2-detectando-as-peças-em-uma-imagem)
-- [Passo 3: Detectando o tabuleiro](#passo-3-detectando-o-tabuleiro)
-- [Passo 4: Detectando as peças no tabuleiro](#passo-4-detectando-as-peças-no-tabuleiro)
-- [Passo 5: Detectando posições de uma determinada peça](#passo-5-detectando-posições-de-uma-determinada-peça)
-- [Passo 6: Desenhando as posições na imagem](#passo-6-desenhando-as-posições-na-imagem)
-- [Código final](#código-final)
-- [Autores](#autores)
+- [Detecção de peças de xadrez utilizando IA e Visão Computacional com Yolov7](#detecção-de-peças-de-xadrez-utilizando-ia-e-visão-computacional-com-yolov7)
+  - [Sumário](#sumário)
+  - [Passo 1: Lendo a peça desejada](#passo-1-lendo-a-peça-desejada)
+  - [Passo 2: Detectando as peças em uma imagem](#passo-2-detectando-as-peças-em-uma-imagem)
+  - [Passo 3: Detectando o tabuleiro](#passo-3-detectando-o-tabuleiro)
+  - [Passo 4: Detectando as peças no tabuleiro](#passo-4-detectando-as-peças-no-tabuleiro)
+  - [Passo 5: Detectando posições de uma determinada peça](#passo-5-detectando-posições-de-uma-determinada-peça)
+  - [Passo 6: Desenhando as posições na imagem](#passo-6-desenhando-as-posições-na-imagem)
+  - [Código final](#código-final)
+  - [Autores](#autores)
 
 ## Passo 1: Lendo a peça desejada
 
@@ -159,4 +161,4 @@ class Chess:
 | ----------------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
 | ![](https://github.com/artuguen28.png?size=80)        | [Arthur Uguen](https://github.com/artuguen28)        | ![](https://github.com/Gtapajos.png?size=80)                | [Guilherme Tapajós](https://github.com/Gtapajos) |
 | ![](https://github.com/FMAbr.png?size=80)             | [Felipe Muniz](https://github.com/FMAbr)             | <img src="https://github.com/melinnediniz.png" width="80"/> | [Melinne Diniz](https://github.com/melinnediniz) |
-| ![](https://github.com/gabrielSantosLima.png?size=80) | [Gabriel Lima](https://github.com/gabrielSantosLima) | ![](https://github.com/tfarias88.png?size=80)               | [Tiago Farias](https://github.com/tfarias88)     |
+| ![](https://github.com/gabrielSantosLima.png?size=80) | [Gabriel Lima](https://github.com/gabrielSantosLima) | ![](https://github.com/tgoofarias.png?size=80)              | [Tiago Farias](https://github.com/tgoofarias)    |

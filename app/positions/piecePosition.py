@@ -1,5 +1,5 @@
 from app.pieces.pieces import DetectPieces
-from chesspiece import Square, CHESS_BOARD
+from app.chesspiece import Square, CHESS_BOARD
 
 
 # lista que armazena as peças detectadas
