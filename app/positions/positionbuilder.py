@@ -1,4 +1,4 @@
-from chesspiece import CHESS_BOARD, COORDINATE, ChessPiece
+from app.chesspiece import CHESS_BOARD, COORDINATE, ChessPiece
 
 
 class PositionBuilder:

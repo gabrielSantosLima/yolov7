@@ -1,4 +1,4 @@
-from app.pieces.detectPieces import DetectPieces
+from app.pieces.pieces import DetectPieces
 from chesspiece import Square, CHESS_BOARD
 
 

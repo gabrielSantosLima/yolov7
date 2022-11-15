@@ -1,17 +1,15 @@
-from chesspiece import (CHESS_BOARD, COORDINATE, ChessObject, ChessPiece,
-                        ChessPieceEnum, ColorEnum, Square)
-from positionbuilder import PositionBuilder
-from utils import get_chess_board_size, get_coordinate, get_notation
+from app.chesspiece import (CHESS_BOARD, COORDINATE, Piece,ChessPieceEnum, ColorEnum)
+from app.positions.positionbuilder import PositionBuilder
+from app.utils import get_chess_board_size
 
-
-def get_positions_of(chess_board: CHESS_BOARD, chess_piece: ChessPiece) -> list[COORDINATE]:
+def get_positions_of(chess_board: CHESS_BOARD, chess_piece: Piece) -> list[COORDINATE]:
     x,y = chess_piece.board_coordinate
     chess_board_size = get_chess_board_size()
     position_builder = PositionBuilder((x,y), chess_board_size, chess_board)
     
-    match chess_piece.type:
+    match get_classname_of(chess_piece.name):
         case ChessPieceEnum.PAWN:
-            if chess_piece.color == ColorEnum.WHITE:
+            if get_color_of(chess_piece.name) == ColorEnum.WHITE:
                 position_builder.up()
                 if y == 6: position_builder.up(2)
             else:
@@ -54,11 +52,31 @@ def get_positions_of(chess_board: CHESS_BOARD, chess_piece: ChessPiece) -> list[
     
     return position_builder.build()
 
-def get_allowed_positions_of(chess_board: CHESS_BOARD, chess_piece: ChessPiece) -> list[COORDINATE]:
+def find_pieces(chess_board: CHESS_BOARD, color:ColorEnum=None) -> list[Piece]:
+    pieces = []
+    for row in chess_board:
+        for chess_object in row:
+            if isinstance(chess_object, Piece):
+                if color != None and chess_object.color == color:
+                    pieces.append(chess_object)
+                elif color == None:
+                    pieces.append(chess_object)
+    return pieces
+
+def get_color_of(name: str)-> ColorEnum:
+    return ColorEnum.WHITE if name.find('white') != -1 else ColorEnum.BLACK
+
+def get_classname_of(name: str) -> ChessPieceEnum:
+    for piece in ChessPieceEnum:
+        if name.find(piece.value) != -1: 
+            return piece
+    return ChessPieceEnum.PAWN
+
+def detect_positions(chess_board: CHESS_BOARD, chess_piece: Piece) -> list[COORDINATE]:
     positions = get_positions_of(chess_board, chess_piece)
     
-    if chess_piece.type == ChessPieceEnum.KING:
-        enemy_color = ColorEnum.BLACK if chess_piece.color == ColorEnum.WHITE else ColorEnum.WHITE
+    if get_classname_of(chess_piece.name) == ChessPieceEnum.KING:
+        enemy_color = ColorEnum.BLACK if get_color_of(chess_piece.name) == ColorEnum.WHITE else ColorEnum.WHITE
         all_positions_of_enemy = []
         for enemy in find_pieces(chess_board, enemy_color):
             all_positions_of_enemy += get_positions_of(chess_board, enemy)
@@ -67,79 +85,3 @@ def get_allowed_positions_of(chess_board: CHESS_BOARD, chess_piece: ChessPiece) 
         )
     
     return positions
-
-def find_pieces(chess_board: CHESS_BOARD, color:ColorEnum=None) -> list[ChessPiece]:
-    pieces = []
-    for row in chess_board:
-        for chess_object in row:
-            if isinstance(chess_object, ChessPiece):
-                if color != None and chess_object.color == color:
-                    pieces.append(chess_object)
-                elif color == None:
-                    pieces.append(chess_object)
-    return pieces 
-
-# Temp
-def print_board(chess_board: CHESS_BOARD):
-    for row in range(8):
-        for column in range(8):
-            el = chess_board[row][column]
-            if isinstance(chess_board[row][column], ChessPiece):
-                print(el.type.value, end='')
-            print(get_notation(el.board_coordinate[0], el.board_coordinate[1]), end=' ')
-        print()
-
-if __name__ == '__main__':
-    board: CHESS_BOARD = []
-    
-    for row in range(8):
-        board.append([])
-        for column in range(8):
-            board[row].append(
-                Square(row * 10, column * 10, 10, 10, (column, row))
-            )
-    
-    board[0][0] = ChessPiece(
-        ChessPieceEnum.ROOK, 
-        ColorEnum.BLACK, 
-        10, 
-        10, 
-        10, 
-        10, 
-        get_coordinate('a8')
-    )
-    board[4][3] = ChessPiece(
-        ChessPieceEnum.ROOK, 
-        ColorEnum.WHITE, 
-        10, 
-        10, 
-        10, 
-        10, 
-        get_coordinate('d4')
-    )
-    board[0][3] = ChessPiece(
-        ChessPieceEnum.QUEEN, 
-        ColorEnum.BLACK, 
-        10, 
-        10, 
-        10, 
-        10, 
-        get_coordinate('d8')
-    )
-    board[5][3] = ChessPiece(
-        ChessPieceEnum.KING, 
-        ColorEnum.WHITE,
-        30,
-        30,
-        10,
-        10,
-        get_coordinate('d3')
-    )
-    
-    positions = get_allowed_positions_of(board, board[5][3])
-    positions_notations = list(
-        map(lambda coordinate: get_notation(coordinate[0], coordinate[1]), positions)
-    )
-    print_board(board)
-    print(positions)
-    print(positions_notations)
