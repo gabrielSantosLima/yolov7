@@ -1,6 +1,7 @@
 import cv2
 from app.chesspiece import Piece
 
+
 def detection_2_pieces(detect, model):
 	pieces = []
 	for det in detect:

@@ -4,6 +4,9 @@ from app.pieces.pieces import detect_pieces
 from app.positions.positions import detect_positions 
 from app.moves.moves import draw_positions
 from app.board.board import detect_board
+from app.yolov7_model import yolov7_model
+from app.positions.piecePosition import detect_pieces_in_board
+from app.cameo import Cameo
 
 class Chess:
     def __init__(self, model):
@@ -47,8 +50,8 @@ class Chess:
             draw_positions(image, positions)
 
 
-# if __name__ == '__main__':
-#     model = yolov7_model('./best.pt',conf_thres = 0.20,iou_thres = 0.40)
-#     main = DetectPieces(model)
-#     c = Cameo()
-#     c.run(main)
+if __name__ == '__main__':
+      model = yolov7_model('./best.pt',conf_thres = 0.20,iou_thres = 0.40)
+      main = detect_pieces(model)
+      c = Cameo()
+      c.run(main)
