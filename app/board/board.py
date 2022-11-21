@@ -26,7 +26,7 @@ def is_approx_square(contour, percent):
 def square_contours(contours, percent = 0.25):
     return [np.int0(cv2.boxPoints(cv2.minAreaRect(contour))) for contour in contours if is_approx_square(contour, percent)]
 
-def prepare_image(image, area = None, morph = False, sharpen = False):
+def prepare_image(image, morph = False, sharpen = False):
     img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
 
     if sharpen:
@@ -85,6 +85,7 @@ def detect_board(image, area = (200, 10000), output = None):
         file = image.copy()
         for index in range(len(contours)):
             cv2.drawContours(file, contours, index, color(), 5)
+        cv2.imwrite('bin-' + output, img_bin)
         cv2.imwrite(output, file)
     
     squares = []
