@@ -96,3 +96,4 @@ def detect_board(image, area = (200, 10000), output = None):
     board = create_board(squares)
 
     return board
+    

@@ -1,4 +1,4 @@
-from app.chesspiece import CHESS_BOARD, COORDINATE, ChessPiece
+from app.chesspiece import CHESS_BOARD, COORDINATE, Piece
 
 
 class PositionBuilder:
@@ -9,7 +9,7 @@ class PositionBuilder:
         self.chess_board = chess_board
 
     def __is_piece(self, x: int, y: int):
-        return isinstance(self.chess_board[y][x], ChessPiece)
+        return isinstance(self.chess_board[y][x], Piece)
 
     def __add_position(self, x: int,y: int):
         self.positions.append((x,y))
