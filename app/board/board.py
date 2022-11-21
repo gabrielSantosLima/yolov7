@@ -38,6 +38,8 @@ def find_contours(image, area = None, morph = False, sharpen = False):
     if morph:
         img_bin = cv2.erode(img_bin, np.ones((3,3), np.uint8), iterations=1)
 
+    cv2.imwrite('teste.png', img_bin)
+
     contours = cv2.findContours(img_bin, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[0]
 
     if area is not None:
@@ -59,18 +61,20 @@ def create_board(squares: list[Square]):
     
     return board
 
-def detect_board(image, area = (200, 10000)):
+def detect_board(image, area = (120, 10000), output="teste.png"):
     width = image.shape[1]
+    height = image.shape[0]
+    print(f"{width}x{height}")
     ratio = None
     if width > 1200:
         image, ratio = adjust_size(image, 800)
     
-    contours = find_contours(image, area, sharpen = True, morph = True)
+    contours = find_contours(image, area, sharpen = True, morph = False)
     
     if ratio is not None:
         contours = translate_contours(contours, (1/ratio))
     
-    contours = square_contours(contours)
+    contours = square_contours(contours, 0.6)
 
     squares = []
     for contour in contours:

@@ -13,6 +13,5 @@ def draw_positions(image, chessObject_list: list[ChessObject]):
                     chessObject.top_right,
                     chessObject.bottom_right,
                     chessObject.bottom_left]
-        points = np.array([contours])
-        cv2.drawContours(img, points, 0, (128, 255, 0), 3)
+        cv2.drawContours(img, contours, 0, (128, 255, 0), 3)
     return img
