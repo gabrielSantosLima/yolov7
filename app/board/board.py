@@ -3,6 +3,7 @@ import numpy as np
 from app.chesspiece import Square
 
 SHARPEN_MATRIX = np.array([[0,-1,0], [-1,5,-1], [0,-1,0]])
+color = lambda: list(np.random.random(size=3) * 256)
 
 def adjust_size(image, new_width):
     height, width = image.shape[:2]
@@ -25,7 +26,7 @@ def is_approx_square(contour, percent):
 def square_contours(contours, percent = 0.25):
     return [np.int0(cv2.boxPoints(cv2.minAreaRect(contour))) for contour in contours if is_approx_square(contour, percent)]
 
-def find_contours(image, area = None, morph = False, sharpen = False):
+def prepare_image(image, area = None, morph = False, sharpen = False):
     img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
 
     if sharpen:
@@ -38,6 +39,9 @@ def find_contours(image, area = None, morph = False, sharpen = False):
     if morph:
         img_bin = cv2.erode(img_bin, np.ones((3,3), np.uint8), iterations=1)
 
+    return img_bin
+
+def find_contours(img_bin, area = None):
     contours = cv2.findContours(img_bin, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[0]
 
     if area is not None:
@@ -45,10 +49,12 @@ def find_contours(image, area = None, morph = False, sharpen = False):
 
     return contours
 
-
 def create_board(squares: list[Square]):
     qtd = len(squares)
-    assert qtd == 64, f'Não é possivel montar o tabuleiro com {qtd} posições.'
+
+    if qtd == 64:
+        print(f'Não é possivel montar o tabuleiro com {qtd} posições.')
+        return
 
     squares.sort(key=lambda square: square.top_left[1])
 
@@ -59,19 +65,27 @@ def create_board(squares: list[Square]):
     
     return board
 
-def detect_board(image, area = (200, 10000)):
+def detect_board(image, area = (200, 10000), output = None):
     width = image.shape[1]
     ratio = None
     if width > 1200:
         image, ratio = adjust_size(image, 800)
     
-    contours = find_contours(image, area, sharpen = True, morph = True)
+    img_bin = prepare_image(image, morph=True, sharpen=True)
+
+    contours = find_contours(img_bin, area)
     
+    print(f'Foram detectados {len(contours)} contornos na imagem')
     if ratio is not None:
         contours = translate_contours(contours, (1/ratio))
     
     contours = square_contours(contours)
 
+    if isinstance(output, str) and output:
+        for index in range(len(contours)):
+            cv2.drawContours(img_bin, contours, index, color(), 5)
+        cv2.imwrite(output, img_bin)
+    
     squares = []
     for contour in contours:
         bottom_left, top_left, top_right, bottom_right = contour
