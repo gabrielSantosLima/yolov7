@@ -84,9 +84,10 @@ def detect_board(image, area = (200, 10000), output = None):
     contours = square_contours(contours, 0.6)
 
     if isinstance(output, str) and output:
+        file = image.copy()
         for index in range(len(contours)):
-            cv2.drawContours(img_bin, contours, index, color(), 5)
-        cv2.imwrite(output, img_bin)
+            cv2.drawContours(file, contours, index, color(), 5)
+        cv2.imwrite(output, file)
     
     squares = []
     for contour in contours:
