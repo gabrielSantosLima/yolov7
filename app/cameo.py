@@ -17,7 +17,7 @@ class Cameo(object):
             frame = self._captureManager.frame
 
             if frame is not None and chess is not None:
-                chess.run(frame)
+                frame = chess.run(frame)
 
             self._captureManager.exitFrame()
             self._windowManager.processEvents()
@@ -33,11 +33,13 @@ class Cameo(object):
         """
         if keycode == 32: # space
             # self._captureManager.writeImage('screenshot.png')
-            # self._captureManager.startWritingVideo(
-            #         'screencast.avi')
             self._captureManager.enterFrame()
             frame = self._captureManager.frame
-            self.chess.run(frame)
+            frame = self.chess.run(frame)
+            cv2.imwrite('out.png', frame)
+            self._captureManager.exitFrame()
+            # self._captureManager.startWritingVideo(
+            #         'screencast.avi')
         elif keycode == 9: # tab
             if not self._captureManager.isWritingVideo:
                 self._captureManager.startWritingVideo(

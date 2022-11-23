@@ -7,11 +7,12 @@ from app.chesspiece import ChessObject
 # [[50, 50], [250, 50], [250, 200], [50, 200]]
 
 def draw_positions(image, chessObject_list: list[ChessObject]):
-    img = image.copy()
+    img = image
     for chessObject in chessObject_list:
-        contours = [chessObject.top_left, 
-                    chessObject.top_right,
-                    chessObject.bottom_right,
-                    chessObject.bottom_left]
-        cv2.drawContours(img, contours, 0, (128, 255, 0), 3)
+        contours = [[chessObject.top_left], 
+                    [chessObject.top_right],
+                    [chessObject.bottom_right],
+                    [chessObject.bottom_left]]
+        contours = np.array([[(np.array(point[0])).astype(int)] for point in contours])
+        cv2.drawContours(img, [contours], 0, (128, 255, 0), 3)
     return img

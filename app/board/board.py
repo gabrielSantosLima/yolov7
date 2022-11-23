@@ -34,7 +34,7 @@ def prepare_image(image, area = None, morph = False, sharpen = False):
         img_sharpened = cv2.filter2D(img_blurred, -1, SHARPEN_MATRIX)
         img_gray = img_sharpened
 
-    img_bin = cv2.adaptiveThreshold(img_gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 21, 20)
+    img_bin = cv2.adaptiveThreshold(img_gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 15, 12)
         
     if morph:
         img_bin = cv2.erode(img_bin, np.ones((3,3), np.uint8), iterations=1)
@@ -67,8 +67,7 @@ def create_board(squares: list[Square]):
 
 def detect_board(image, area = (200, 10000), output = None):
     width = image.shape[1]
-    height = image.shape[0]
-    print(f"{width}x{height}")
+    
     ratio = None
     if width > 1200:
         image, ratio = adjust_size(image, 800)

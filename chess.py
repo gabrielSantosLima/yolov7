@@ -10,6 +10,7 @@ class Chess:
     def __init__(self, model):
         self.model = model
         self.board: list[list[ChessObject]] = []
+        self.pieces: list[Piece] = []
 
     def __find_piece_in_board(self, board: CHESS_BOARD, piece_notation: str) -> ChessObject:
         x,y = get_coordinate(piece_notation)
@@ -24,25 +25,26 @@ class Chess:
     def run(self, image):
         # piece_notation = input("Digite a peça que você deseja detectar: ")
 
-        # Detectando as peças
+        # # Detectando as peças
         pieces: list[Piece] = detect_pieces(image, self.model)
+        if len(pieces) != 0: self.pieces = pieces.copy()
 
-        # Detectando o tabuleiro
-        if len(self.board) == 0:
-            self.board: list[list[Square]] = detect_board(image, output='out.png')
+        # # Detectando o tabuleiro
+        # if len(self.board) == 0:
+        #     self.board: list[list[Square]] = detect_board(image, output='out.png')
 
-        # Detectando peças no tabuleiro
-        board_with_pieces: CHESS_BOARD = detect_pieces_in_board(pieces, self.board)
+        # # Detectando peças no tabuleiro
+        # board_with_pieces: CHESS_BOARD = detect_pieces_in_board(pieces, self.board)
 
-        # Atualizando coordenadas das peças
-        self.__update_coordinates(board_with_pieces)
+        # # Atualizando coordenadas das peças
+        # self.__update_coordinates(board_with_pieces)
 
-        # Buscando a peça desejada no tabuleiro
-        piece = self.__find_piece_in_board(board_with_pieces, "e4")
+        # # Buscando a peça desejada no tabuleiro
+        # piece = self.__find_piece_in_board(board_with_pieces, "e4")
 
-        # Detectando posições de uma peça, caso ela exista no tabuleiro.
-        if isinstance(piece, Piece):
-            positions: list[ChessObject] = detect_positions(board_with_pieces, piece)
+        # # Detectando posições de uma peça, caso ela exista no tabuleiro.
+        # if isinstance(piece, Piece):
+        #     positions: list[ChessObject] = detect_positions(board_with_pieces, piece)
 
             # Desenhando as posições na imagem
-            draw_positions(image, positions)
+        return draw_positions(image, self.pieces)
