@@ -38,7 +38,7 @@ class Chess:
         # Detectando o tabuleiro
         if len(self.board) == 0:
             detected_board = detect_board(image, output='out.png')
-            if not self.__is_board_valid(detected_board): return
+            if not self.__is_board_valid(detected_board): return image
             self.board: list[list[Square]] = detected_board
 
 
