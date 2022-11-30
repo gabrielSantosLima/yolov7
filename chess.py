@@ -22,6 +22,12 @@ class Chess:
                 if isinstance(piece, Piece):
                     piece.coordinate = (x,y)
 
+    def __is_board_valid(self, board: CHESS_BOARD) -> bool:
+        if len(board) != 8: return False
+        for row in board:
+            if len(row) != 8: return False
+        return True
+
     def run(self, image):
         # piece_notation = input("Digite a peça que você deseja detectar: ")
 
@@ -29,22 +35,25 @@ class Chess:
         pieces: list[Piece] = detect_pieces(image, self.model)
         if len(pieces) != 0: self.pieces = pieces.copy()
 
-        # # Detectando o tabuleiro
-        # if len(self.board) == 0:
-        #     self.board: list[list[Square]] = detect_board(image, output='out.png')
+        # Detectando o tabuleiro
+        if len(self.board) == 0:
+            detected_board = detect_board(image, output='out.png')
+            if not self.__is_board_valid(detected_board): return
+            self.board: list[list[Square]] = detected_board
 
-        # # Detectando peças no tabuleiro
-        # board_with_pieces: CHESS_BOARD = detect_pieces_in_board(pieces, self.board)
 
-        # # Atualizando coordenadas das peças
-        # self.__update_coordinates(board_with_pieces)
+        # Detectando peças no tabuleiro
+        board_with_pieces: CHESS_BOARD = detect_pieces_in_board(pieces, self.board)
 
-        # # Buscando a peça desejada no tabuleiro
-        # piece = self.__find_piece_in_board(board_with_pieces, "e4")
+        # Atualizando coordenadas das peças
+        self.__update_coordinates(board_with_pieces)
 
-        # # Detectando posições de uma peça, caso ela exista no tabuleiro.
-        # if isinstance(piece, Piece):
-        #     positions: list[ChessObject] = detect_positions(board_with_pieces, piece)
+        # Buscando a peça desejada no tabuleiro
+        piece = self.__find_piece_in_board(board_with_pieces, "e4")
+
+        # Detectando posições de uma peça, caso ela exista no tabuleiro.
+        if isinstance(piece, Piece):
+            positions: list[ChessObject] = detect_positions(board_with_pieces, piece)
 
             # Desenhando as posições na imagem
-        return draw_positions(image, self.pieces)
+            return draw_positions(image, positions)
