@@ -163,7 +163,11 @@ class WindowManager(object):
         cv2.destroyWindow(self._windowName)
         self._isWindowCreated = False
 
-    def processEvents(self):
+    def processMouseEvents(self, eventHandler):
+        if self._isWindowCreated:
+            cv2.setMouseCallback(self._windowName, eventHandler)
+
+    def processKeyEvents(self):
         keycode = cv2.waitKey(1)
         if self.keypressCallback is not None and keycode != -1:
             self.keypressCallback(keycode)    

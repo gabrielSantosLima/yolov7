@@ -99,7 +99,41 @@ def create_board(squares: list[Square]):
     
     return rows
 
-def detect_board(image, area = (20*20, 55*50), output = None):
+def split_board(image, crop, output = None):
+	left = right = crop[0][0]
+	top = bottom = crop[0][1]
+	for coord in crop:
+		if left > coord[0]:
+			left = coord[0]
+		elif right < coord[0]:
+			right = coord[0]
+
+		if top > coord[1]:
+			top = coord[1]
+		elif bottom < coord[1]:
+			bottom = coord[1]
+
+	col_width = (right - left)//8
+	row_height = (bottom - top)//8
+
+	rows = []
+	y = top
+	for _ in range(8):
+		row = []
+		x = left
+		for _ in range(8):
+			row.append(Square((x,y), (x+col_width, y), (x+col_width, y+row_height), (x, y+row_height)))
+			x+= col_width
+		y+= row_height
+		rows.append(row)
+
+	if output:
+		file = image.copy()
+		cv2.imwrite('out/' + output, file)
+
+	return rows
+
+def detect_board(image, area = None, output = None):
     img_bin = prepare_image(image, morph=True, sharpen=False)
 
     contours = find_contours(img_bin, area)
