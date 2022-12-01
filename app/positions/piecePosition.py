@@ -5,10 +5,18 @@ from app.chesspiece import COORDINATE
 import app.board.board
 from math import sqrt
 
+def __copy__(board: list[list[Square]]) -> list[list[Square]]:
+    copy: list[list[Square]] = []
+    for index, row in enumerate(board):
+        copy.append([])
+        for chess_object in row:
+            copy[index].append(chess_object)
+    return copy
+    
 # função que retorna uma matriz preechida de Squares e objetos Pieces inseridos nas posições reais em que foram detectados
 def detect_pieces_in_board(pieces, board: list[list[Square]]):
     
-    board_copy = board
+    board_copy = __copy__(board)
     nearest = board[0][0]
     # lista que armazenará dois ou mais objetos Piece caso estejam em mesma posição em um índice da matriz board_Pieces
     for e in range(len(pieces)):

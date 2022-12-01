@@ -77,14 +77,14 @@ def get_classname_of(name: str) -> ChessPieceEnum:
 def detect_positions(chess_board: CHESS_BOARD, chess_piece: Piece, piece_coordinate: COORDINATE) -> list[ChessObject]:
     positions = get_positions_of(chess_board, chess_piece, piece_coordinate)
     
-    if get_classname_of(chess_piece.name) == ChessPieceEnum.KING:
-        enemy_color = ColorEnum.BLACK if get_color_of(chess_piece.name) == ColorEnum.WHITE else ColorEnum.WHITE
-        all_positions_of_enemy = []
-        for enemy in find_pieces(chess_board, enemy_color):
-            all_positions_of_enemy += get_positions_of(chess_board, enemy)
-        positions = list(
-            filter(lambda position: position not in all_positions_of_enemy, positions)
-        )
+    # if get_classname_of(chess_piece.name) == ChessPieceEnum.KING:
+    #     enemy_color = ColorEnum.BLACK if get_color_of(chess_piece.name) == ColorEnum.WHITE else ColorEnum.WHITE
+    #     all_positions_of_enemy = []
+    #     for enemy in find_pieces(chess_board, enemy_color):
+    #         all_positions_of_enemy += get_positions_of(chess_board, enemy)
+    #     positions = list(
+    #         filter(lambda position: position not in all_positions_of_enemy, positions)
+    #     )
     
     positions_2_chess_object: list[ChessObject] = list(
         map(lambda coordinate: chess_board[coordinate[1]][coordinate[0]], positions)
