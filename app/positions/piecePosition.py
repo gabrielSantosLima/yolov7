@@ -1,8 +1,6 @@
 from app.pieces.pieces import detect_pieces
-from app.chesspiece import Square, CHESS_BOARD
-from app.chesspiece import Piece
+from app.chesspiece import Square
 from app.chesspiece import COORDINATE
-import app.board.board
 from math import sqrt
 
 def __copy__(board: list[list[Square]]) -> list[list[Square]]:
