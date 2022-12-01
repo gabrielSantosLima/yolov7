@@ -1,5 +1,6 @@
 import cv2
 from app.managers import CaptureManager, WindowManager
+from app.utils import get_coordinate
 
 
 class Cameo(object):
@@ -9,7 +10,7 @@ class Cameo(object):
         self.chess = chess
         self._captureManager = CaptureManager(
             cv2.VideoCapture(1), self._windowManager, False)
-        
+        self.coordinate = get_coordinate("a8")
         self._crop_coords = [None]*4
         self._crop_index = 0
         self._mouse_dragging = False
@@ -22,12 +23,12 @@ class Cameo(object):
             self._captureManager.enterFrame()
             frame = self._captureManager.frame
 
+            if frame is not None and chess is not None and None not in self._crop_coords:
+                frame = chess.run(frame, self._crop_coords, self.coordinate)
+            
             for coord in self._crop_coords:
                 if coord is not None:
                     cv2.circle(frame, coord, 5, (0,0,255), -1)
-            
-            if frame is not None and chess is not None:
-                frame = chess.run(frame)
 
             self._captureManager.exitFrame()
             self._windowManager.processKeyEvents()
@@ -41,18 +42,15 @@ class Cameo(object):
         escape -> Quit.
 
         """
-        if keycode == 32: # space
-            # self._captureManager.writeImage('screenshot.png')
-            self._captureManager.enterFrame()
-            frame = self._captureManager.frame
-            frame = self.chess.run(frame)
-            cv2.imwrite('out.png', frame)
-            self._captureManager.exitFrame()
-            # self._captureManager.startWritingVideo(
-            #         'screencast.avi')
-        elif keycode == ord('c') and not self._mouse_dragging:
+        if keycode == ord('l') and not self._mouse_dragging:
             self._crop_coords = [None]*4
             self._crop_index = 0
+        if keycode == ord('r'):
+            column = chr(cv2.waitKey(0))
+            row = chr(cv2.waitKey(0))
+            coordinate =  get_coordinate(column + row)
+            if coordinate != (-1,-1):
+                self.coordinate = coordinate
         elif keycode == 9: # tab
             if not self._captureManager.isWritingVideo:
                 self._captureManager.startWritingVideo(

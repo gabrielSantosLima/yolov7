@@ -14,8 +14,9 @@ def detection_2_pieces(detect, model):
 
 		piece_on_screeen = Piece(top_left, top_right, bottom_right, bottom_left, names[int(det[5])])
 
-		print(f'| {piece_on_screeen.name} |\n   top left: {piece_on_screeen.top_left}   top right: {piece_on_screeen.top_right}')
-		print(f'bottom left: {piece_on_screeen.bottom_left} bottom right: {piece_on_screeen.bottom_right}')
+		print(f'Detectado: {piece_on_screeen.name}')
+		# print(f'| {piece_on_screeen.name} |\n   top left: {piece_on_screeen.top_left}   top right: {piece_on_screeen.top_right}')
+		# print(f'bottom left: {piece_on_screeen.bottom_left} bottom right: {piece_on_screeen.bottom_right}')
 		pieces.append(piece_on_screeen)
 	return pieces
 

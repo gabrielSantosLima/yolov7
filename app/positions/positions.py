@@ -2,11 +2,13 @@ from app.chesspiece import (CHESS_BOARD, COORDINATE, ChessObject, Piece,ChessPie
 from app.positions.positionbuilder import PositionBuilder
 from app.utils import get_chess_board_size
 
-def get_positions_of(chess_board: CHESS_BOARD, chess_piece: Piece) -> list[COORDINATE]:
-    x,y = chess_piece.board_coordinate
+def get_positions_of(chess_board: CHESS_BOARD, chess_piece: Piece, piece_coordinate: COORDINATE) -> list[COORDINATE]:
+    x,y = piece_coordinate
     chess_board_size = get_chess_board_size()
     position_builder = PositionBuilder((x,y), chess_board_size, chess_board)
     
+    print(get_classname_of(chess_piece.name))
+
     if get_classname_of(chess_piece.name) == ChessPieceEnum.PAWN:
         if get_color_of(chess_piece.name) == ColorEnum.WHITE:
             position_builder.up()
@@ -56,7 +58,7 @@ def find_pieces(chess_board: CHESS_BOARD, color:ColorEnum=None) -> list[Piece]:
     for row in chess_board:
         for chess_object in row:
             if isinstance(chess_object, Piece):
-                if color != None and chess_object.color == color:
+                if color != None and get_color_of(chess_object.name) == color:
                     pieces.append(chess_object)
                 elif color == None:
                     pieces.append(chess_object)
@@ -68,11 +70,12 @@ def get_color_of(name: str)-> ColorEnum:
 def get_classname_of(name: str) -> ChessPieceEnum:
     for piece in ChessPieceEnum:
         if name.find(piece.value) != -1: 
+            print(f"Nome: {name}")
             return piece
     return ChessPieceEnum.PAWN
 
-def detect_positions(chess_board: CHESS_BOARD, chess_piece: Piece) -> list[ChessObject]:
-    positions = get_positions_of(chess_board, chess_piece)
+def detect_positions(chess_board: CHESS_BOARD, chess_piece: Piece, piece_coordinate: COORDINATE) -> list[ChessObject]:
+    positions = get_positions_of(chess_board, chess_piece, piece_coordinate)
     
     if get_classname_of(chess_piece.name) == ChessPieceEnum.KING:
         enemy_color = ColorEnum.BLACK if get_color_of(chess_piece.name) == ColorEnum.WHITE else ColorEnum.WHITE
@@ -84,7 +87,7 @@ def detect_positions(chess_board: CHESS_BOARD, chess_piece: Piece) -> list[Chess
         )
     
     positions_2_chess_object: list[ChessObject] = list(
-        map(lambda x,y: chess_board[y][x], positions)
+        map(lambda coordinate: chess_board[coordinate[1]][coordinate[0]], positions)
     )
 
     return positions_2_chess_object
