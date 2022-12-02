@@ -51,6 +51,8 @@ class Cameo(object):
             coordinate =  get_coordinate(column + row)
             if coordinate != (-1,-1):
                 self.coordinate = coordinate
+        elif keycode == ord('m'):
+            self.chess.toggle_minimap()
         elif keycode == 9: # tab
             if not self._captureManager.isWritingVideo:
                 self._captureManager.startWritingVideo(
